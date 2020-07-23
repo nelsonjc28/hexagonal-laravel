@@ -4,19 +4,20 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>&nbsp;</th>
+                </thead>
+                <tbody>
+                <tD>Nelson Castillo</tD>
+                <th>nelsonjcastillos96@gmail.com</th>
+                <th width="190px"><button class="btn btn-primary btn-sm">Ver</button>
+                    <button class="btn btn-warning btn-sm">Editar</button>
+                    <button class="btn btn-danger btn-sm">Borrar</button> </th>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
