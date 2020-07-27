@@ -10,7 +10,11 @@ class ValidationUsers
 
     public function run(Request $request)
     {
-        dd($request);
+        $request->validate([
+            'name'=>'required|String|Max:50',
+            'email'=>'required|unique:users,email',
+            'password'=>'required',
+            ]);
 
     }
 

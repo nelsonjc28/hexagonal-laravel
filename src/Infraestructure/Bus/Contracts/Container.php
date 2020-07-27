@@ -1,7 +1,12 @@
 <?php
+
+
 namespace Crud_users\Infraestructure\Bus\Contracts;
 
-interface CommandBus
+
+interface Container
 {
+
+    public function make($class);
 
 }

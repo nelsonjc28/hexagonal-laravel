@@ -85,7 +85,7 @@
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
                 type: "POST",
                 url: window.location.origin+'/user/create',
-                data: {'request': form},
+                data: form,
                 dataType: 'json',
                 success : function(data) {
                 },
