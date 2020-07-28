@@ -5,7 +5,7 @@ namespace Crud_users\Infraestructure\Bus;
 
 use Crud_users\Application\Contracts\Command;
 use Crud_users\Infraestructure\Bus\Contracts\CommandBus;
-use Crud_users\Infraestructure\Bus\Contracts\Container;
+use Crud_users\Application\Contracts\Container;
 
 class SimpleCommandBus implements CommandBus
 {

@@ -1,7 +1,7 @@
 <?php
-namespace Crud_users\Infraestructure\Bus\Contracts;
+namespace Crud_users\Infraestructure\Bus;
 
-use Crud_users\Infraestructure\Bus\Contracts\Container;
+use Crud_users\Application\Contracts\Container;
 use Illuminate\Container\Container  as IoC;
 
 final class LaravelContainer implements Container

@@ -4,7 +4,13 @@
 namespace Crud_users\Application\Services;
 
 
-class CreateUserHandler implements Hendler
+final class CreateUserHandler implements Hendler
 {
+private $repository;
+
+public function __construct()
+{
+
+}
 
 }
