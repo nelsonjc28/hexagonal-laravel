@@ -18,7 +18,11 @@ final class UserElocuentRepository implements UserRepository
 
     public function save(UserEntity $user)
     {
-        dd($user);
-        $this->model->create($user);
+        $newUser = $this->model->create([
+            'name' => $user->getName(),
+            'email' => $user->getEmail(),
+            'password' => bcrypt($user->getPassword())
+        ]);
+        return $newUser;
     }
 }

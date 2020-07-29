@@ -10,20 +10,23 @@
             </div>
             <div class="col-md-8">
 
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped" id="tableUser">
                     <thead>
-                    <th>Nombre</th>
-                    <th>Correo</th>
-                    <th>&nbsp;</th>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>&nbsp;</th>
                     </thead>
                     <tbody>
-                    <tD>Nelson Castillo</tD>
-                    <th>nelsonjcastillos96@gmail.com</th>
-                    <th width="190px">
-                        <button class="btn btn-primary btn-sm">Ver</button>
-                        <button class="btn btn-warning btn-sm">Editar</button>
-                        <button class="btn btn-danger btn-sm">Borrar</button>
-                    </th>
+                    <tr>
+                        <th>Nelson Castillo</th>
+                        <th>nelsonjcastillos96@gmail.com</th>
+                        <th width="190px">
+                            <button class="btn btn-primary btn-sm">Ver</button>
+                            <button class="btn btn-warning btn-sm">Editar</button>
+                            <button class="btn btn-danger btn-sm">Borrar</button>
+                        </th>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -52,7 +55,8 @@
                         </div>
                         <div class="input-group-group">
                             <label for="password">Clave</label>
-                            <input name="password" id="password" type="password" class="form-control" minlength="8" required>
+                            <input name="password" id="password" type="password" class="form-control" minlength="8"
+                                   required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -69,37 +73,63 @@
 @section('script')
     <script type="application/javascript">
 
-        $('#userModal #userForm').on('submit', function (e) {
-            e.preventDefault();
+              function loadusers(){
 
-            let form = $('#userModal #userForm').serialize();
+                $.get({
+                    url:window.location.origin + '/user/getUsers',
+                    success:function (data) {
+                        console.log(data)
+                    }
+                })
 
-            $('#userModal').modal('hide');
+            }
+            loadusers()
 
-            if ($('.modal-backdrop').is(':visible')) {
-                $('body').removeClass('modal-open');
-                $('.modal-backdrop').remove();
-            };
+            $('#userModal #userForm').on('submit', function (e) {
+                e.preventDefault();
 
-            $.ajax({
-                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                type: "POST",
-                url: window.location.origin+'/user/create',
-                data: form,
-                dataType: 'json',
-                success : function(data) {
-                },
-                error : function(error) {
-                },
-            });
+                let form = $('#userModal #userForm').serialize();
 
-        })
+                $('#userModal').modal('hide');
 
-        $('body #userModal').on('hidden.bs.modal', function (e) {
-            $('#userModal #userForm #name').val('');
-            $('#userModal #userForm #email').val('');
-            $('#userModal #userForm #password').val('');
-        })
+                if ($('.modal-backdrop').is(':visible')) {
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+                }
+
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    type: "POST",
+                    url: window.location.origin + '/user/create',
+                    data: form,
+                    dataType: 'json',
+                    success: function (data) {
+
+                        $("#tableUser").append(
+                            '<tr id="' + data.id + '">' +
+                            '<th class="username">' + data.name + '</th>' +
+                            '<th class="email">' + data.email + '</th>' +
+                            '<th width="190px">' +
+                            '<button class="btn btn-primary btn-sm">Ver</button>' +
+                            '<button class="btn btn-warning btn-sm">Editar</button>' +
+                            '<button class="btn btn-danger btn-sm">Borrar</button>' +
+                            '</th>' +
+                            '</tr>');
+
+                    },
+                    error: function (error) {
+                    },
+                });
+
+            })
+
+            $('body #userModal').on('hidden.bs.modal', function (e) {
+                $('#userModal #userForm #name').val('');
+                $('#userModal #userForm #email').val('');
+                $('#userModal #userForm #password').val('');
+            })
+
+
 
     </script>
 @endsection

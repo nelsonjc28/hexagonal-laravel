@@ -22,7 +22,7 @@ final class CreateUserHandler implements Hendler
             $command->getEmail(),
             $command->getPassword()
         );
-        $this->repository->save($user);
+        return $this->repository->save($user);
     }
 
 }

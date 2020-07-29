@@ -22,6 +22,13 @@ class UserController extends Controller
         (new ValidationUsers())->run($request);
         $command = new CreateUserCommand($request->name, $request->email, $request->password);
 
-        $this->commandBus->execute($command);
+        $vari = $this->commandBus->execute($command);
+
+        return $vari;
     }
+
+    public function getUsers()
+{
+    return "aqui estas";
+}
 }
