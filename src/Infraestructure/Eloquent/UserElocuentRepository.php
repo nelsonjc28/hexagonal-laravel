@@ -18,6 +18,7 @@ final class UserElocuentRepository implements UserRepository
 
     public function save(UserEntity $user)
     {
+        dd($user);
         $this->model->create($user);
     }
 }

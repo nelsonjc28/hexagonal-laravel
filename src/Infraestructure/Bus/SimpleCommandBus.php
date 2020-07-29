@@ -21,12 +21,12 @@ class SimpleCommandBus implements CommandBus
 
     public function execute($command)
     {
-        $this->resolveHandler($command)->__invoke($command);
+        return $this->resolveHandler($command)->__invoke($command);
     }
 
     public function resolveHandler(Command $command)
     {
-        $this->container->make($this->getHandlerClass($command));
+        return $this->container->make($this->getHandlerClass($command));
     }
 
     public function getHandlerClass(Command $command)

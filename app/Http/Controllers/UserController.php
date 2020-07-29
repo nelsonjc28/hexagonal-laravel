@@ -13,7 +13,7 @@ class UserController extends Controller
     private $commandBus;
     public function __construct(CommandBus $commandBus)
     {
-        $this->CommandBus = $commandBus;
+        $this->commandBus = $commandBus;
 
     }
 

@@ -15,6 +15,6 @@ final class LaravelContainer implements Container
 
     public function make($class)
     {
-        $this->container->make($class);
+        return $this->container->make($class);
     }
 }
