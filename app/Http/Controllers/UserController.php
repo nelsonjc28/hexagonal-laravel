@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Crud_users\Application\Services\CreateUserCommand;
@@ -17,6 +18,14 @@ class UserController extends Controller
 
     }
 
+    public function listar()
+    {
+
+        $users = User::select(['id','name','email'])->get();
+
+        return view('home',compact("users")) ;
+    }
+
     public function store(Request $request)
     {
         (new ValidationUsers())->run($request);
@@ -27,8 +36,5 @@ class UserController extends Controller
         return $vari;
     }
 
-    public function getUsers()
-{
-    return "aqui estas";
-}
+
 }

@@ -18,15 +18,17 @@
                         <th>&nbsp;</th>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th>Nelson Castillo</th>
-                        <th>nelsonjcastillos96@gmail.com</th>
-                        <th width="190px">
-                            <button class="btn btn-primary btn-sm">Ver</button>
-                            <button class="btn btn-warning btn-sm">Editar</button>
-                            <button class="btn btn-danger btn-sm">Borrar</button>
-                        </th>
-                    </tr>
+                    @foreach($users as $user)
+                        <tr id="{{$user->id}}">
+                            <th class="username">{{$user->name}}</th>
+                            <th class="email">{{$user->email}}</th>
+                            <th width="190px">
+                                <button class="btn btn-primary btn-sm" onclick="ver({{$user->id}})">Ver</button>
+                                <button class="btn btn-warning btn-sm" onclick="editar({{$user->id}})">Editar</button>
+                                <button class="btn btn-danger btn-sm" onclick="borrar({{$user->id}})">Borrar</button>
+                            </th>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -72,64 +74,61 @@
 @endsection
 @section('script')
     <script type="application/javascript">
+        
+        $('#userModal #userForm').on('submit', function (e) {
+            e.preventDefault();
 
-              function loadusers(){
+            let form = $('#userModal #userForm').serialize();
 
-                $.get({
-                    url:window.location.origin + '/user/getUsers',
-                    success:function (data) {
-                        console.log(data)
-                    }
-                })
+            $('#userModal').modal('hide');
 
+            if ($('.modal-backdrop').is(':visible')) {
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
             }
-            loadusers()
 
-            $('#userModal #userForm').on('submit', function (e) {
-                e.preventDefault();
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                type: "POST",
+                url: window.location.origin + '/user/create',
+                data: form,
+                dataType: 'json',
+                success: function (data) {
 
-                let form = $('#userModal #userForm').serialize();
+                    $("#tableUser").append(
+                        '<tr id="' + data.id + '">' +
+                        '<th class="username">' + data.name + '</th>' +
+                        '<th class="email">' + data.email + '</th>' +
+                        '<th width="190px">' +
+                        '<button class="btn btn-primary btn-sm" onclick="ver(' + data.id + ')">Ver</button>' +
+                        '<button class="btn btn-warning btn-sm" onclick="editar(' + data.id + ')">Editar</button>' +
+                        '<button class="btn btn-danger btn-sm" onclick="borrar(' + data.id + ')">Borrar</button>' +
+                        '</th>' +
+                        '</tr>');
 
-                $('#userModal').modal('hide');
+                },
+                error: function (error) {
+                },
+            });
 
-                if ($('.modal-backdrop').is(':visible')) {
-                    $('body').removeClass('modal-open');
-                    $('.modal-backdrop').remove();
-                }
+        })
 
-                $.ajax({
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    type: "POST",
-                    url: window.location.origin + '/user/create',
-                    data: form,
-                    dataType: 'json',
-                    success: function (data) {
+        $('body #userModal').on('hidden.bs.modal', function (e) {
+            $('#userModal #userForm #name').val('');
+            $('#userModal #userForm #email').val('');
+            $('#userModal #userForm #password').val('');
+        })
 
-                        $("#tableUser").append(
-                            '<tr id="' + data.id + '">' +
-                            '<th class="username">' + data.name + '</th>' +
-                            '<th class="email">' + data.email + '</th>' +
-                            '<th width="190px">' +
-                            '<button class="btn btn-primary btn-sm">Ver</button>' +
-                            '<button class="btn btn-warning btn-sm">Editar</button>' +
-                            '<button class="btn btn-danger btn-sm">Borrar</button>' +
-                            '</th>' +
-                            '</tr>');
+        var ver = function (id) {
+            console.log(id)
+        }
 
-                    },
-                    error: function (error) {
-                    },
-                });
-
-            })
-
-            $('body #userModal').on('hidden.bs.modal', function (e) {
-                $('#userModal #userForm #name').val('');
-                $('#userModal #userForm #email').val('');
-                $('#userModal #userForm #password').val('');
-            })
-
-
+        var editar = function (id) {
+            console.log(id)
+        }
+        var borrar = function (id) {
+            console.log(id)
+        }
 
     </script>
 @endsection
