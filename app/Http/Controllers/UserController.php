@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Crud_users\Application\Services\CreateUserCommand;
+use Crud_users\Application\Services\EditUserCommand;
 use Crud_users\Infraestructure\Bus\Contracts\CommandBus;
 use Crud_users\Infraestructure\Validations\ValidationUsers;
 
@@ -34,6 +35,15 @@ class UserController extends Controller
         $vari = $this->commandBus->execute($command);
 
         return $vari;
+    }
+
+    public function show(Request $request)
+    {
+        $command = new EditUserCommand($request->id);
+
+        $vari = $this->commandBus->execute($command);
+
+        return $request->id;
     }
 
 

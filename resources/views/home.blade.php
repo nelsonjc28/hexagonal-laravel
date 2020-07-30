@@ -34,6 +34,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="titleLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -70,11 +71,47 @@
 
         </div>
     </div>
+    <div class="modal fade" id="userModalEdit" tabindex="-1" role="dialog" aria-labelledby="titleLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <form id="userEditForm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="titleLabel">Editar usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group-group">
+                            <label for="name">Nombre</label>
+                            <input name="name" id="editName" type="text" class="form-control" required>
+                        </div>
+
+                        <div class="input-group-group">
+                            <label for="email">Email</label>
+                            <input name="email" id="editEmail" type="email" class="form-control" required>
+                        </div>
+                        <div class="input-group-group">
+                            <label for="password">Clave</label>
+                            <input name="password" id="editPassword" type="password" class="form-control" minlength="8"
+                                   required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
 
 @endsection
 @section('script')
     <script type="application/javascript">
-        
+
         $('#userModal #userForm').on('submit', function (e) {
             e.preventDefault();
 
@@ -124,8 +161,16 @@
         }
 
         var editar = function (id) {
-            console.log(id)
+            $.get({
+                url:window.location.origin + '/user/show/'+id,
+                success:function (data) {
+                    console.log(data)
+                    $('#userModalEdit').modal('show');
+
+                }
+            })
         }
+
         var borrar = function (id) {
             console.log(id)
         }
