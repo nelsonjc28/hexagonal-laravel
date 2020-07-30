@@ -30,6 +30,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         (new ValidationUsers())->run($request);
+
         $command = new CreateUserCommand($request->name, $request->email, $request->password);
 
         $vari = $this->commandBus->execute($command);
@@ -41,9 +42,9 @@ class UserController extends Controller
     {
         $command = new EditUserCommand($request->id);
 
-        $vari = $this->commandBus->execute($command);
+        $userFound = $this->commandBus->execute($command);
 
-        return $request->id;
+        return $userFound;
     }
 
 

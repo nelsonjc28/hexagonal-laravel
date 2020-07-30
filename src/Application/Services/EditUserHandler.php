@@ -6,7 +6,7 @@ namespace Crud_users\Application\Services;
 use Crud_users\Domain\UserEntity;
 use Crud_users\Domain\UserRepository;
 
-final class CreateUserHandler implements Hendler
+final class EditUserHandler implements Hendler
 {
     private $repository;
 
@@ -18,12 +18,10 @@ final class CreateUserHandler implements Hendler
     public function __invoke($command)
     {
         $user = new UserEntity(
-            $command->getId(),
-            $command->getName(),
-            $command->getEmail(),
-            $command->getPassword()
+            $command->getId()
         );
-        return $this->repository->save($user);
+
+        return $this->repository->search($user);
     }
 
 }

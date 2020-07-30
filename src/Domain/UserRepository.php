@@ -10,4 +10,6 @@ interface UserRepository
 {
     public function save(UserEntity $user);
 
+    public function search(UserEntity $user);
+
 }

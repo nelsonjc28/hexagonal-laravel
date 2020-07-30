@@ -25,4 +25,12 @@ final class UserElocuentRepository implements UserRepository
         ]);
         return $newUser;
     }
+
+    public function search(UserEntity $user)
+    {
+        $userFound = $this->model->find($user->getId());
+//        dd($userFound);
+        return $userFound;
+    }
+
 }

@@ -75,6 +75,8 @@
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <form id="userEditForm">
+                <input name="id" id="id" type="hidden">
+
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="titleLabel">Editar usuario</h5>
@@ -164,10 +166,17 @@
             $.get({
                 url:window.location.origin + '/user/show/'+id,
                 success:function (data) {
-                    console.log(data)
                     $('#userModalEdit').modal('show');
 
+                    $('body #userModalEdit').on('shown.bs.modal', function () {
+                        console.log("hi here")
+                        $('#userModalEdit #userEditForm #id').val(data.id);
+                        $('#userModalEdit #userEditForm #editName').val(data.name);
+                        $('#userModalEdit #userEditForm #editEmail').val(data.email);
+                    })
+
                 }
+
             })
         }
 
