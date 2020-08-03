@@ -12,4 +12,6 @@ interface UserRepository
 
     public function search(UserEntity $user);
 
+    public function update(UserEntity $user);
+
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Crud_users\Application\Services\UpdateUserCommand;
+use Crud_users\Application\Services\UpdateUserHandler;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Crud_users\Application\Services\CreateUserCommand;
@@ -31,20 +33,22 @@ class UserController extends Controller
     {
         (new ValidationUsers())->run($request);
 
-        $command = new CreateUserCommand($request->name, $request->email, $request->password);
-
+        $command = new CreateUserCommand(null,$request->name, $request->email, $request->password);
         $vari = $this->commandBus->execute($command);
-
         return $vari;
     }
 
     public function show(Request $request)
     {
         $command = new EditUserCommand($request->id);
-
         $userFound = $this->commandBus->execute($command);
-
         return $userFound;
+    }
+    public function update(Request $request)
+    {
+        $command = new UpdateUserCommand($request->id, $request->name, $request->email, $request->password);
+        $vari = $this->commandBus->execute($command);
+        return $vari;
     }
 
 

@@ -169,7 +169,6 @@
                     $('#userModalEdit').modal('show');
 
                     $('body #userModalEdit').on('shown.bs.modal', function () {
-                        console.log("hi here")
                         $('#userModalEdit #userEditForm #id').val(data.id);
                         $('#userModalEdit #userEditForm #editName').val(data.name);
                         $('#userModalEdit #userEditForm #editEmail').val(data.email);
@@ -179,6 +178,53 @@
 
             })
         }
+
+        $('#userModalEdit #userEditForm').on('submit', function (e) {
+            e.preventDefault();
+
+            let form = $('#userModalEdit #userEditForm').serialize();
+
+            $('#userModalEdit').modal('hide');
+
+            if ($('.modal-backdrop').is(':visible')) {
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+            }
+
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                type: "POST",
+                url: window.location.origin + '/user/update',
+                data: form,
+                dataType: 'json',
+                success: function (data) {
+
+                    $('#'+data.id).find('.username').html(data.name)
+                    $('#'+data.id).find('.email').html(data.email)
+
+                    // $("#tableUser").append(
+                    //     '<tr id="' + data.id + '">' +
+                    //     '<th class="username">' + data.name + '</th>' +
+                    //     '<th class="email">' + data.email + '</th>' +
+                    //     '<th width="190px">' +
+                    //     '<button class="btn btn-primary btn-sm" onclick="ver(' + data.id + ')">Ver</button>' +
+                    //     '<button class="btn btn-warning btn-sm" onclick="editar(' + data.id + ')">Editar</button>' +
+                    //     '<button class="btn btn-danger btn-sm" onclick="borrar(' + data.id + ')">Borrar</button>' +
+                    //     '</th>' +
+                    //     '</tr>');
+
+                },
+                error: function (error) {
+                },
+            });
+
+        })
+        $('body #userModalEdit').on('hide.bs.modal', function () {
+            $('#userModalEdit #userEditForm #id').val();
+            $('#userModalEdit #userEditForm #editName').val();
+            $('#userModalEdit #userEditForm #editEmail').val();
+            $('#userModalEdit #userEditForm #editPassword').val();
+        })
 
         var borrar = function (id) {
             console.log(id)

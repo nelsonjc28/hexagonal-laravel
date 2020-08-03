@@ -32,4 +32,16 @@ final class UserElocuentRepository implements UserRepository
         return $userFound;
     }
 
+    public function update(UserEntity $user)
+    {
+        $userFound = $this->search($user);
+
+        $userFound->name = $user->getName();
+        $userFound->email = $user->getEmail();
+        $userFound->password = bcrypt($user->getPassword());
+        $userFound->save();
+
+        return $userFound;
+    }
+
 }
