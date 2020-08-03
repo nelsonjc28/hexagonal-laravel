@@ -14,4 +14,6 @@ interface UserRepository
 
     public function update(UserEntity $user);
 
+    public function destroy(UserEntity $user);
+
 }

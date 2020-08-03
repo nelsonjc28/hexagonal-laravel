@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Crud_users\Application\Services\DeleteUserCommand;
 use Crud_users\Application\Services\UpdateUserCommand;
 use Crud_users\Application\Services\UpdateUserHandler;
 use Illuminate\Console\Command;
@@ -51,5 +52,11 @@ class UserController extends Controller
         return $vari;
     }
 
+    public function destroy(Request $request)
+    {
+        $command = new DeleteUserCommand($request->id, $request->name, $request->email, $request->password);
+        $vari = $this->commandBus->execute($command);
+        return $vari ;
+    }
 
 }

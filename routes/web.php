@@ -22,3 +22,4 @@ Route::get('/user/listar', 'UserController@listar')->name('user.listar');
 Route::post('/user/create', 'UserController@store')->name('user.create');
 Route::get('/user/show/{id}', 'UserController@show')->name('user.show');
 Route::post('/user/update', 'UserController@update')->name('user.update');
+Route::delete('/user/destroy', 'UserController@destroy')->name('user.destroy');

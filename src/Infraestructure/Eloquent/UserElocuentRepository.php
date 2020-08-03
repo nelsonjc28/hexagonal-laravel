@@ -44,4 +44,12 @@ final class UserElocuentRepository implements UserRepository
         return $userFound;
     }
 
+    public function destroy(UserEntity $user)
+    {
+        $userFound = $this->search($user);
+        $userFound->delete();
+
+        return $userFound;
+    }
+
 }

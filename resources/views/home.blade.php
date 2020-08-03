@@ -158,14 +158,10 @@
             $('#userModal #userForm #password').val('');
         })
 
-        var ver = function (id) {
-            console.log(id)
-        }
-
         var editar = function (id) {
             $.get({
-                url:window.location.origin + '/user/show/'+id,
-                success:function (data) {
+                url: window.location.origin + '/user/show/' + id,
+                success: function (data) {
                     $('#userModalEdit').modal('show');
 
                     $('body #userModalEdit').on('shown.bs.modal', function () {
@@ -199,27 +195,15 @@
                 dataType: 'json',
                 success: function (data) {
 
-                    $('#'+data.id).find('.username').html(data.name)
-                    $('#'+data.id).find('.email').html(data.email)
-
-                    // $("#tableUser").append(
-                    //     '<tr id="' + data.id + '">' +
-                    //     '<th class="username">' + data.name + '</th>' +
-                    //     '<th class="email">' + data.email + '</th>' +
-                    //     '<th width="190px">' +
-                    //     '<button class="btn btn-primary btn-sm" onclick="ver(' + data.id + ')">Ver</button>' +
-                    //     '<button class="btn btn-warning btn-sm" onclick="editar(' + data.id + ')">Editar</button>' +
-                    //     '<button class="btn btn-danger btn-sm" onclick="borrar(' + data.id + ')">Borrar</button>' +
-                    //     '</th>' +
-                    //     '</tr>');
-
+                    $('#' + data.id).find('.username').html(data.name)
+                    $('#' + data.id).find('.email').html(data.email)
                 },
                 error: function (error) {
                 },
             });
 
         })
-        $('body #userModalEdit').on('hide.bs.modal', function () {
+        $('body #userModalEdit').on('hidden.bs.modal', function () {
             $('#userModalEdit #userEditForm #id').val();
             $('#userModalEdit #userEditForm #editName').val();
             $('#userModalEdit #userEditForm #editEmail').val();
@@ -227,7 +211,18 @@
         })
 
         var borrar = function (id) {
-            console.log(id)
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                type: "DELETE",
+                url: window.location.origin + '/user/destroy',
+                data: {'id': id},
+                dataType: 'json',
+                success: function (data) {
+                    $('#' + data.id).remove();
+                },
+                error: function (error) {
+                },
+            });
         }
 
     </script>
